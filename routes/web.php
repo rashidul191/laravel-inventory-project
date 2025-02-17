@@ -16,9 +16,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return "Laravel Inventory Home Page";
 });
 
+// API Routes
 Route::post('/user-registration', [UserController::class, 'userRegistration'])->name('user-registration.registration');
 Route::post('/user-login', [UserController::class, 'userLogin'])->name('user-login.login');
 Route::post('/send-otp', [UserController::class, 'sendOTPCode'])->name('send-otp.otp');
@@ -26,3 +27,13 @@ Route::post('/verify-otp', [UserController::class, 'verifyOTP'])->name('verify-o
 
 // Token Verify
 Route::post('/reset-password', [UserController::class, 'resetUserPassword'])->name('reset-user-password.reset-password')->middleware([TokenVerificationMiddleware::class]);
+
+
+// Page Routes
+
+Route::get('/userLogin', [UserController::class, 'loginPage'])->name('userLogin.loginPage');
+Route::get('/userRegistration', [UserController::class, 'registrationPage'])->name('userRegistration.registrationPage');
+Route::get('/sendOTP', [UserController::class, 'sendOTPPage'])->name('sendOTP.sendOTPPage');
+Route::get('/verifyOTP', [UserController::class, 'sendOTPPage'])->name('verifyOTP.verifyOTPPage');
+Route::get('/resetPassword', [UserController::class, 'resetPasswordPage'])->name('resetPassword.resetPasswordPage');
+Route::get('/dashboard', [UserController::class, 'dashboardPage'])->name('dashboard.dashboardPage');

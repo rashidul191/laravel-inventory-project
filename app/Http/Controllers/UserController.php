@@ -129,4 +129,9 @@ class UserController extends Controller
       }
 
     }
+
+    // Show Login Page
+    public function loginPage(){
+        return view('pages.auth.login-page');
+    }
 }
