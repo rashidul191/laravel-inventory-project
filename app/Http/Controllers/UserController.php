@@ -38,6 +38,8 @@ class UserController extends Controller
     // User Login Method
     public function userLogin(Request $request)
     {
+
+        // dd($request);
         $userFind = User::where('email', '=', $request->input('email'))
             ->where('password', '=', $request->input('password'))
             ->count();
@@ -46,8 +48,8 @@ class UserController extends Controller
             return response()->json([
                 'status' => 'success',
                 'message' => 'User Login Successful',
-                'token' => $token,
-            ], 200);
+                // 'token' => $token,
+            ], 200)->cookie('token', $token, 60*24*30);
         } else {
             return response()->json([
                 'status' => 'failed',
@@ -109,29 +111,50 @@ class UserController extends Controller
     // Reset / Forgot Password Method
     public function resetUserPassword(Request $request)
     {
-      try {
-        $email = $request->header('email');
-        $newPassword = $request->input('password');
-        User::where('email', '=', $email)->update([
-            'password' => $newPassword,
-        ]);
+        try {
+            $email = $request->header('email');
+            $newPassword = $request->input('password');
+            User::where('email', '=', $email)->update([
+                'password' => $newPassword,
+            ]);
 
-        return response()->json([
-            'status'=> 'success',
-            'message' => "Password Reset Successful"
-        ], 200);
-      } catch (Exception $e) {
-        //throw $th;
-        return response()->json([
-            'status'=> 'failed',
-            'message' => "Something Went Wrong!!!"
-        ], 200);
-      }
-
+            return response()->json([
+                'status' => 'success',
+                'message' => "Password Reset Successful"
+            ], 200);
+        } catch (Exception $e) {
+            //throw $th;
+            return response()->json([
+                'status' => 'failed',
+                'message' => "Something Went Wrong!!!"
+            ], 200);
+        }
     }
 
     // Show Login Page
-    public function loginPage(){
+    public function loginPage()
+    {
         return view('pages.auth.login-page');
+    }
+    public function registrationPage()
+    {
+        return view('pages.auth.registration-page');
+    }
+    public function sendOTPPage()
+    {
+        return view('pages.auth.send-otp-page');
+    }
+    public function verifyOTPPage()
+    {
+        return view('pages.auth.verify-otp-page');
+    }
+    public function resetPasswordPage()
+    {
+        return view('pages.auth.reset-pass-page');
+    }
+    public function dashboardPage()
+    {
+        return view('pages.dashboard.dashboard-page');
+        // return 'hi';
     }
 }
