@@ -31,6 +31,7 @@
                 hideLoader();
                 if (res.status === 200 && res.data.status === 'success') {
                     successToast(res.data.message);
+                    sessionStorage.setItem('email', email);
                     setTimeout(() => {
                         window.location.href = "/verifyOTP";
                     }, 2000);

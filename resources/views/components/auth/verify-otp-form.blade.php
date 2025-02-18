@@ -16,21 +16,22 @@
 </div>
 <script>
     async function VerifyOtp() {
+        const email = sessionStorage.getItem('email');
         const otp = document.getElementById('otp').value;
 
-        if (otp.length === 0) {
-            errorToast("OTP is required!");
-        } else if (otp.length != 6) {
-            errorToast("OTP will be 6 Digit ");
+        if (otp.length !== 6) {
+            errorToast("Invalid OTP ");
         } else {
             try {
                 showLoader();
                 const res = await axios.post('/verify-otp', {
+                    email: email,
                     otp: otp
                 })
                 hideLoader();
                 if (res.status === 200 && res.data.status === 'success') {
                     successToast(res.data.message);
+                    sessionStorage.clear();
                     setTimeout(() => {
                         window.location.href = "/resetPassword"
                     }, 2000);
