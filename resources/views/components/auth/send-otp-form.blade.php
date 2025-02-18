@@ -4,11 +4,11 @@
             <div class="card animated fadeIn w-90  p-4">
                 <div class="card-body">
                     <h4>EMAIL ADDRESS</h4>
-                    <br/>
+                    <br />
                     <label>Your email address</label>
-                    <input id="email" placeholder="User Email" class="form-control" type="email"/>
-                    <br/>
-                    <button onclick="VerifyEmail()"  class="btn w-100 float-end bg-gradient-primary">Next</button>
+                    <input id="email" name="email" placeholder="User Email" class="form-control" type="email" />
+                    <br />
+                    <button onclick="VerifyEmail()" class="btn w-100 float-end bg-gradient-primary">Next</button>
                 </div>
             </div>
         </div>
@@ -16,8 +16,33 @@
 </div>
 
 <script>
-   async function VerifyEmail() {
-      
+    async function VerifyEmail() {
+
+        const email = document.getElementById('email').value;
+
+        if (!email) {
+            errorToast("Email is required!!");
+        } else {
+            try {
+                showLoader();
+                const res = await axios.post('/send-otp', {
+                    email: email
+                });
+                hideLoader();
+                if (res.status === 200 && res.data.status === 'success') {
+                    successToast(res.data.message);
+                    setTimeout(() => {
+                        window.location.href = "/verifyOTP";
+                    }, 2000);
+                } else {
+                    errorToast(res.data.message);
+                }
+
+            } catch (error) {
+                errorToast("Something wrong!!!");
+            }
+        }
+
 
     }
 </script>
