@@ -22,12 +22,15 @@ class TokenVerificationMiddleware
         $result = JWTToken::verifyToken($token);
         // dd($result);
         if ($result === "unauthorized") {
-            return response()->json([
-                'status' => 'failed',
-                'message' => 'unauthorized',
-            ], 401);
+            // return response()->json([
+            //     'status' => 'failed',
+            //     'message' => 'unauthorized',
+            // ], 401);
+
+            return redirect()->route('userLogin.loginPage');
         } else {
-            $request->headers->set('email', $result);
+            $request->headers->set('email', $result->userEmail);
+            $request->headers->set('userId', $result->userId);
             return $next($request);
         }
     }

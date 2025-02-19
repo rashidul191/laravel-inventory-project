@@ -34,5 +34,12 @@ Route::get('/userLogin', [UserController::class, 'loginPage'])->name('userLogin.
 Route::get('/userRegistration', [UserController::class, 'registrationPage'])->name('userRegistration.registrationPage');
 Route::get('/sendOTP', [UserController::class, 'sendOTPPage'])->name('sendOTP.sendOTPPage');
 Route::get('/verifyOTP', [UserController::class, 'verifyOTPPage'])->name('verifyOTP.verifyOTPPage');
-Route::get('/resetPassword', [UserController::class, 'resetPasswordPage'])->name('resetPassword.resetPasswordPage');
-Route::get('/dashboard', [UserController::class, 'dashboardPage'])->name('dashboard.dashboardPage');
+
+
+// Route::get('/resetPassword', [UserController::class, 'resetPasswordPage'])->name('resetPassword.resetPasswordPage')->middleware([TokenVerificationMiddleware::class]);;
+// Route::get('/dashboard', [UserController::class, 'dashboardPage'])->name('dashboard.dashboardPage')->middleware([TokenVerificationMiddleware::class]);
+
+Route::middleware([TokenVerificationMiddleware::class])->group(function () {
+    Route::get('/resetPassword', [UserController::class, 'resetPasswordPage'])->name('resetPassword.resetPasswordPage');
+    Route::get('/dashboard', [UserController::class, 'dashboardPage'])->name('dashboard.dashboardPage');
+});

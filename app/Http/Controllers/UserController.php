@@ -7,6 +7,7 @@ use App\Mail\OTPMail;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
@@ -40,11 +41,17 @@ class UserController extends Controller
     {
 
         // dd($request);
+        // $userFind = User::where('email', '=', $request->input('email'))
+        //     ->where('password', '=', $request->input('password'))
+        //     ->count();
         $userFind = User::where('email', '=', $request->input('email'))
             ->where('password', '=', $request->input('password'))
-            ->count();
-        if ($userFind === 1) {
-            $token = JWTToken::createTokenForUserLogin($request->input('email'));
+            ->select('id')->first();
+
+
+        // if ($userFind === 1) {
+        if ($userFind != null) {
+            $token = JWTToken::createTokenForUserLogin($request->input('email'), $userFind->id);
             return response()->json([
                 'status' => 'success',
                 'message' => 'User Login Successful',
@@ -160,7 +167,12 @@ class UserController extends Controller
     }
     public function dashboardPage()
     {
-        return view('pages.dashboard.dashboard-page');
-        // return 'hi';
+        $token = Cookie::get('token');
+        // dd($token);
+        if ($token) {
+            return view('pages.dashboard.dashboard-page');
+        } else {
+            return redirect()->route('userLogin.loginPage');
+        }
     }
 }
