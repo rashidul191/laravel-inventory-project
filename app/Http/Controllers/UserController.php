@@ -131,6 +131,12 @@ class UserController extends Controller
         }
     }
 
+    public function userLogout()
+    {
+        // return redirect('/userLogin')->cookie('token', '', '-1');
+        return redirect()->route('userLogin.loginPage')->cookie('token', '', '-1');
+    }
+
     // Show Login Page
     public function loginPage()
     {

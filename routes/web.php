@@ -24,13 +24,12 @@ Route::post('/user-registration', [UserController::class, 'userRegistration'])->
 Route::post('/user-login', [UserController::class, 'userLogin'])->name('user-login.login');
 Route::post('/send-otp', [UserController::class, 'sendOTPCode'])->name('send-otp.otp');
 Route::post('/verify-otp', [UserController::class, 'verifyOTP'])->name('verify-otp.otp');
-
 // Token Verify
 Route::post('/reset-password', [UserController::class, 'resetUserPassword'])->name('reset-user-password.reset-password')->middleware([TokenVerificationMiddleware::class]);
+Route::get('/logout', [UserController::class, 'userLogout'])->name('logout.user-logout');
 
 
 // Page Routes
-
 Route::get('/userLogin', [UserController::class, 'loginPage'])->name('userLogin.loginPage');
 Route::get('/userRegistration', [UserController::class, 'registrationPage'])->name('userRegistration.registrationPage');
 Route::get('/sendOTP', [UserController::class, 'sendOTPPage'])->name('sendOTP.sendOTPPage');
