@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return "Laravel Inventory Home Page";
+    return redirect()->route('userLogin.loginPage');
 });
 
 // Web API Routes
@@ -30,11 +30,18 @@ Route::get('/logout', [UserController::class, 'userLogout'])->name('logout.user-
 
 
 // Page Routes
-Route::get('/userLogin', [UserController::class, 'loginPage'])->name('userLogin.loginPage');
-Route::get('/userRegistration', [UserController::class, 'registrationPage'])->name('userRegistration.registrationPage');
-Route::get('/sendOTP', [UserController::class, 'sendOTPPage'])->name('sendOTP.sendOTPPage');
-Route::get('/verifyOTP', [UserController::class, 'verifyOTPPage'])->name('verifyOTP.verifyOTPPage');
+// Route::get('/userLogin', [UserController::class, 'loginPage'])->name('userLogin.loginPage');
+// Route::get('/userRegistration', [UserController::class, 'registrationPage'])->name('userRegistration.registrationPage');
+// Route::get('/sendOTP', [UserController::class, 'sendOTPPage'])->name('sendOTP.sendOTPPage');
+// Route::get('/verifyOTP', [UserController::class, 'verifyOTPPage'])->name('verifyOTP.verifyOTPPage');
 
+
+Route::controller(UserController::class)->group(function () {
+    Route::get('/userLogin', 'loginPage')->name('userLogin.loginPage');
+    Route::get('/userRegistration', 'registrationPage')->name('userRegistration.registrationPage');
+    Route::get('/sendOTP', 'sendOTPPage')->name('sendOTP.sendOTPPage');
+    Route::get('/verifyOTP', 'verifyOTPPage')->name('verifyOTP.verifyOTPPage');
+});
 
 // Route::get('/resetPassword', [UserController::class, 'resetPasswordPage'])->name('resetPassword.resetPasswordPage')->middleware([TokenVerificationMiddleware::class]);;
 // Route::get('/dashboard', [UserController::class, 'dashboardPage'])->name('dashboard.dashboardPage')->middleware([TokenVerificationMiddleware::class]);
@@ -42,4 +49,5 @@ Route::get('/verifyOTP', [UserController::class, 'verifyOTPPage'])->name('verify
 Route::middleware([TokenVerificationMiddleware::class])->group(function () {
     Route::get('/resetPassword', [UserController::class, 'resetPasswordPage'])->name('resetPassword.resetPasswordPage');
     Route::get('/dashboard', [UserController::class, 'dashboardPage'])->name('dashboard.dashboardPage');
+    Route::get('/userProfile', [UserController::class, 'userProfilePage'])->name('userProfile.userProfilePage');
 });

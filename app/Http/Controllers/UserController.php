@@ -165,6 +165,10 @@ class UserController extends Controller
     {
         return view('pages.auth.reset-pass-page');
     }
+
+    public function userProfilePage(){
+        return view('pages.dashboard.profile-page');
+    }
     public function dashboardPage()
     {
         $token = Cookie::get('token');

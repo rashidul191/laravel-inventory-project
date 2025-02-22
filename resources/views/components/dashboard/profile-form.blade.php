@@ -41,11 +41,11 @@
 </div>
 
 <script>
-    getProfile();
     async function getProfile(){
-       
-
+        const userGet = await axios('/userProfile');
+        
     }
+    getProfile();
 
     async function onUpdate() {
 
