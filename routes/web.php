@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\TokenVerificationMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -50,4 +51,16 @@ Route::middleware([TokenVerificationMiddleware::class])->group(function () {
     Route::get('/resetPassword', [UserController::class, 'resetPasswordPage'])->name('resetPassword.resetPasswordPage');
     Route::get('/dashboard', [UserController::class, 'dashboardPage'])->name('dashboard.dashboardPage');
     Route::get('/userProfile', [UserController::class, 'userProfilePage'])->name('userProfile.userProfilePage');
+
+    Route::get('/user-profile', [UserController::class, 'userProfileGet'])->name('user-profile.userProfile');
+    Route::post('/update-profile', [UserController::class, 'updateProfile'])->name('update-profile.updateProfile');
+
+    // Category Route
+    Route::controller(CategoryController::class)->group(function () {
+        Route::get('/categoryPage', 'categoryPage')->name('category.categoryPage');
+        Route::get('/list-category', 'getCategory')->name('listCategory.getCategory');
+        Route::post('/create-category', 'createCategory')->name('create-category.category');
+        Route::post('/delete-category', 'categoryDelete')->name('delete-category.category');
+        Route::post('/update-category', 'categoryUpdate')->name('update-category.category');
+    });
 });

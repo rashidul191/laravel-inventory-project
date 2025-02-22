@@ -32,7 +32,7 @@ class UserController extends Controller
             return response()->json([
                 'status' => 'failed',
                 'message' => 'User Registration Failed',
-            ], 200);
+            ], 400);
         }
     }
 
@@ -166,9 +166,12 @@ class UserController extends Controller
         return view('pages.auth.reset-pass-page');
     }
 
-    public function userProfilePage(){
+    public function userProfilePage()
+    {
         return view('pages.dashboard.profile-page');
     }
+
+
     public function dashboardPage()
     {
         $token = Cookie::get('token');
@@ -177,6 +180,43 @@ class UserController extends Controller
             return view('pages.dashboard.dashboard-page');
         } else {
             return redirect()->route('userLogin.loginPage');
+        }
+    }
+
+    public function userProfileGet(Request $request)
+    {
+        $email = $request->header('email');
+        $userGet = User::where('email', '=', $email)->first();
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Request Successful',
+            'data' => $userGet,
+        ], 200);
+    }
+
+    public function updateProfile(Request $request)
+    {
+        try {
+            $email = $request->header('email');
+            $firstName = $request->input('firstName');
+            $lastName = $request->input('lastName');
+            $mobile = $request->input('mobile');
+            $password = $request->input('password');
+            User::where('email', '=', $email)->update([
+                'firstName' => $firstName,
+                'lastName' => $lastName,
+                'mobile' => $mobile,
+                'password' => $password,
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Profile Update Successful',
+            ], 200);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'something went wrong!',
+            ], 400);
         }
     }
 }

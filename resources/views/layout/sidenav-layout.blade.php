@@ -55,7 +55,7 @@
                     <div class="user-dropdown-content ">
                         <div class="mt-4 text-center">
                             <img class="icon-nav-img" src="{{asset('images/user.webp')}}" alt="" />
-                            <h6>User Name</h6>
+                            <h6 id="userName"></h6>
                             <hr class="user-dropdown-divider  p-0" />
                         </div>
                         <a href="{{url('/userProfile')}}" class="side-bar-item">
@@ -121,6 +121,19 @@
 
     <script>
         function MenuBarClickHandler() {}
+
+        const userName = document.getElementById('userName');
+        getProfile();
+
+        async function getProfile() {
+            const res = await axios.get('/user-profile');
+            if (res) {
+                userName.innerText = res.data.data.firstName;
+            } else {
+                userName.innerText = "User Name";
+            }
+
+        }
     </script>
 
 </body>
