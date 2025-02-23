@@ -30,31 +30,24 @@
 
         const catName = document.getElementById('categoryName').value;
 
-
-        console.log(catName);
         if (!catName) {
             errorToast("Category is required!");
         } else {
-            // try {
-            // showLoad1er();
+            document.getElementById('modal-close').click();
+
+            showLoader();
             const res = await axios.post('/create-category', {
                 name: catName
             });
-            // hideLoader() ;
-            // console.log(res);
-            // if (res.status === 200 && res.data.status === 'success') {
-            //     setTimeout(() => {
-            //         successToast(res.data.message);
-            //     }, 1000);
-            // } else {
-            //     errorToast(res.data.message);
-            // }
-            // } catch (error) {
-            //     hideLoader();
-            //     errorToast('Something went wrong!!');
-            // }
+            hideLoader();
+
+            if (res.status === 201) {
+                successToast("Request Completed");
+                document.getElementById('save-form').reset();
+                await getList();
+            } else {
+                errorToast('something went wrong!!');
+            }
         }
-
-
     }
 </script>

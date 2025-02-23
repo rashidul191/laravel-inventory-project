@@ -50,16 +50,29 @@
         <td>${index+1}</td>
         <td>${item.name}</td>
         <td>        
-        <button class="btn btn-sm btn-outline-info">Edit</button>
-        <button class="btn btn-sm btn-outline-danger">Delete</button>
+        <button data-id=${item.id} class="edit_btn btn btn-sm btn-outline-info">Edit</button>
+        <button data-id=${item.id} class="delete_btn btn btn-sm btn-outline-danger">Delete</button>
         </td>
         </tr>`;
             tableList.append(row);
 
-
         });
 
         new DataTable(tableData);
+
+        $('.edit_btn').on('click', async function() {
+            const catId = $(this).data('id');
+
+
+            const res = await axios.edit()
+
+        });
+        $('.delete_btn').on('click', async function() {
+            const catId = $(this).data('id');
+            $("#delete-modal").modal('show');
+            $("#deleteID").val(catId);
+        });
+
 
     }
 </script>
