@@ -30,6 +30,10 @@
 
         if (res.data === 1) {
             successToast('Category Deleted');
+            const tableData = $('#tableData');
+            const tableList = $('#tableList');
+            tableData.DataTable().destroy();
+            tableList.empty();
             await getList();
         } else {
             errorToast('Failed!!');

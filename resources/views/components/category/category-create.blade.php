@@ -34,7 +34,6 @@
             errorToast("Category is required!");
         } else {
             document.getElementById('modal-close').click();
-
             showLoader();
             const res = await axios.post('/create-category', {
                 name: catName

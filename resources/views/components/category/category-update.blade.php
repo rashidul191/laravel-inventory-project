@@ -27,5 +27,42 @@
 
 
 <script>
-    async function FillUpUpdateForm(id) {}
+    async function FillUpUpdateForm(id) {
+
+        $('#updateID').val(id);
+        showLoader();
+        const res = await axios.get(`/category-by-id/${id}`);
+        hideLoader();
+        if (res.status === 200) {
+            // console.log(res.data.name);
+            $('#categoryNameUpdate').val(res.data.name);
+        } else {
+            errorToast('something went wrong!');
+        }
+    }
+
+    async function Update() {
+
+        const updateCat = $('#categoryNameUpdate').val();
+        const catId = $('#updateID').val();
+        showLoader();
+        const res = await axios.post('/update-category', {
+            id: catId,
+            name: updateCat
+        });
+
+        $('#update-modal-close').click();
+        hideLoader();
+        // console.log(res);
+        if (res.status === 200) {
+            successToast('Category Updated');
+            const tableData = $('#tableData');
+            const tableList = $('#tableList');
+            tableData.DataTable().destroy();
+            tableList.empty();
+            await getList();
+        } else {
+            errorToast('something went wrong!');
+        }
+    }
 </script>
