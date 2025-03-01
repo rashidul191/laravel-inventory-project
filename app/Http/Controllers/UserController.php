@@ -170,8 +170,7 @@ class UserController extends Controller
     {
         return view('pages.dashboard.profile-page');
     }
-
-
+    
     public function dashboardPage()
     {
         $token = Cookie::get('token');
