@@ -39,10 +39,10 @@
     tableList.empty();
 
     async function getList() {
+        showLoader();
         const res = await axios.get('/customerList');
-
+        hideLoader();
         res.data.data.forEach((item, index) => {
-
             const row = `
            <tr>
     <td>${index + 1}</td>

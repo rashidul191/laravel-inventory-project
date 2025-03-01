@@ -1,39 +1,65 @@
 <div class="modal animated zoomIn" id="create-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-md modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Create Customer</h5>
-                </div>
-                <div class="modal-body">
-                    <form id="save-form">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create Customer</h5>
+            </div>
+            <div class="modal-body">
+                <form id="save-form">
                     <div class="container">
                         <div class="row">
                             <div class="col-12 p-1">
                                 <label class="form-label">Customer Name *</label>
-                                <input type="text" class="form-control" id="customerName">
+                                <input type="text" class="form-control" id="customerName" name="customerName">
                                 <label class="form-label">Customer Email *</label>
-                                <input type="text" class="form-control" id="customerEmail">
+                                <input type="text" class="form-control" id="customerEmail" name="customerEmail">
                                 <label class="form-label">Customer Mobile *</label>
-                                <input type="text" class="form-control" id="customerMobile">
+                                <input type="text" class="form-control" id="customerMobile" name="customerMobile">
                             </div>
                         </div>
                     </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button id="modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>
-                    <button onclick="Save()" id="save-btn" class="btn bg-gradient-success" >Save</button>
-                </div>
+                </form>
             </div>
+            <div class="modal-footer">
+                <button id="modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>
+                <button onclick="Save()" id="save-btn" class="btn bg-gradient-success">Save</button>
+            </div>
+        </div>
     </div>
 </div>
 
 
 <script>
-
     async function Save() {
 
-     
-    }
+        const customerName = $("#customerName").val();
+        const customerEmail = $("#customerEmail").val();
+        const customerMobile = $("#customerMobile").val();
 
+        if (!customerName) {
+            errorToast('Customer Name is Required!');
+        } else if (!customerEmail) {
+            errorToast('Customer Email is Required!');
+        } else if (!customerMobile) {
+            errorToast('Customer Mobile is Required!');
+        } else {
+            $('#modal-close').click();
+            showLoader();
+            const res = await axios.post('/customerCreate', {
+                name: customerName,
+                email: customerEmail,
+                mobile: customerMobile,
+            });
+            hideLoader();
+            if (res.status === 201) {
+                successToast('Customer Create Successfully');
+                $('#save-form').reset();
+                await getList();
+            } else {
+                errorToast('Something went wrong!');
+            }
+        }
+
+
+    }
 </script>

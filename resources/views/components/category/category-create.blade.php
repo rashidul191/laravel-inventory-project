@@ -43,6 +43,7 @@
             if (res.status === 201) {
                 successToast("Request Completed");
                 document.getElementById('save-form').reset();
+                
                 await getList();
             } else {
                 errorToast('something went wrong!!');

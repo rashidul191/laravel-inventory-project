@@ -16,7 +16,8 @@ class CustomerController extends Controller
     // get all customer
     public function customerList()
     {
-        $result = Customer::all();
+        $result = Customer::orderBy('created_at', 'desc')->get();
+
         if ($result) {
             return response()->json([
                 'status' => 'success',
@@ -29,5 +30,20 @@ class CustomerController extends Controller
                 'message' => "something went wrang!!",
             ], 401);
         }
+    }
+
+    // Create Customer
+    public function customerCreate(Request $request)
+    {
+        $user_id = $request->header('userId');
+        $customerName = $request->input('name');
+        $customerEmail = $request->input('email');
+        $customerMobile = $request->input('mobile');
+        return  Customer::create([
+            'name' => $customerName,
+            'email' => $customerEmail,
+            'mobile' => $customerMobile,
+            'user_id' =>  $user_id
+        ]);
     }
 }
