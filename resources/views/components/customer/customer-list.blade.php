@@ -60,5 +60,12 @@
         });
         new DataTable(tableData);
 
+        $('.delete_btn').on('click', function() {
+            const customerId = $(this).data('id');
+            // console.log(customerId);
+            $('#delete-modal').modal('show');
+            $('#deleteID').val(customerId);
+        })
+
     }
 </script>

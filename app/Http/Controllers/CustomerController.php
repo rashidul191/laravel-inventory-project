@@ -14,9 +14,10 @@ class CustomerController extends Controller
     }
 
     // get all customer
-    public function customerList()
+    public function customerList(Request $request)
     {
-        $result = Customer::orderBy('created_at', 'desc')->get();
+        $user_id = $request->header('userId');
+        $result = Customer::where('user_id', '=', $user_id)->orderBy('created_at', 'desc')->get();
 
         if ($result) {
             return response()->json([
@@ -45,5 +46,13 @@ class CustomerController extends Controller
             'mobile' => $customerMobile,
             'user_id' =>  $user_id
         ]);
+    }
+
+    // Delete Customer id
+
+    public function customerDelete(Request $request, $id)
+    {
+        $user_id = $request->header('userId');
+        return Customer::where('id', $id)->where('user_id', $user_id)->delete();
     }
 }
