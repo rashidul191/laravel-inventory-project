@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Customer;
 use Illuminate\Http\Request;
+use Symfony\Contracts\Service\Attribute\Required;
 
 class CustomerController extends Controller
 {
@@ -54,5 +55,28 @@ class CustomerController extends Controller
     {
         $user_id = $request->header('userId');
         return Customer::where('id', $id)->where('user_id', $user_id)->delete();
+    }
+
+    // Customer By Id
+    public function customerById(Request $request, $id)
+    {
+        $user_id = $request->header('userId');
+        return Customer::where('id', $id)->where('user_id', $user_id)->first();
+    }
+
+    // Customer Update
+    public function customerUpdate(Request $request, $id)
+    {
+        $user_id = $request->header('userId');
+        $customerName = $request->input('name');
+        $customerEmail = $request->input('email');
+        $customerMobile = $request->input('mobile');
+
+        // return Customer::where('id', '=', $id)->where('user_id', '=', $user_id)->update([
+        return Customer::where('id', $id)->where('user_id', $user_id)->update([
+            'name' => $customerName,
+            'email' => $customerEmail,
+            'mobile' => $customerMobile,
+        ]);
     }
 }

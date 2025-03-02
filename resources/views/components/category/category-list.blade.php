@@ -50,7 +50,7 @@
         <td>${index+1}</td>
         <td>${item.name}</td>
         <td>        
-        <button data-bs-toggle="modal" data-bs-target="#update-modal" data-id=${item.id} class="edit_btn btn btn-sm btn-outline-info">Edit</button>
+        <button data-id=${item.id} class="edit_btn btn btn-sm btn-outline-info">Edit</button>
         <button data-id=${item.id} class="delete_btn btn btn-sm btn-outline-danger">Delete</button>
         </td>
         </tr>`;

@@ -62,10 +62,14 @@
 
         $('.delete_btn').on('click', function() {
             const customerId = $(this).data('id');
-            // console.log(customerId);
             $('#delete-modal').modal('show');
             $('#deleteID').val(customerId);
-        })
+        });
+        $('.edit_btn').on('click', async function() {
+            const customerId = $(this).data('id');
+            await FillUpUpdateForm(customerId);
+            $('#update-modal').modal('show');
+        });
 
     }
 </script>

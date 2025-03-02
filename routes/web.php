@@ -74,5 +74,7 @@ Route::middleware([TokenVerificationMiddleware::class])->group(function () {
         Route::get('/customerList', 'customerList');
         Route::post('/customerCreate', 'customerCreate');
         Route::delete('/customerDelete/{id}', 'customerDelete');
+        Route::get('/customer-by-id/{id}', 'customerById');
+        Route::put('/customerUpdate/{id}', 'customerUpdate');
     });
 });
