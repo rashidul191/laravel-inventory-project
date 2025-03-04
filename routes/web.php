@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\TokenVerificationMiddleware;
 use Illuminate\Support\Facades\Route;
@@ -68,7 +69,6 @@ Route::middleware([TokenVerificationMiddleware::class])->group(function () {
 
 
     // Customer Route
-
     Route::controller(CustomerController::class)->group(function () {
         Route::get('/customerPage', 'customerPage')->name('customer-page');
         Route::get('/customerList', 'customerList');
@@ -76,5 +76,11 @@ Route::middleware([TokenVerificationMiddleware::class])->group(function () {
         Route::delete('/customerDelete/{id}', 'customerDelete');
         Route::get('/customer-by-id/{id}', 'customerById');
         Route::put('/customerUpdate/{id}', 'customerUpdate');
+    });
+
+    // Product Route
+    Route::controller(ProductController::class)->group(function () {
+        Route::get('/productPage', 'productPage')->name('productPage');
+        Route::get('/productList', 'productList')->name('productList');
     });
 });
