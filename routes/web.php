@@ -70,7 +70,7 @@ Route::middleware([TokenVerificationMiddleware::class])->group(function () {
     // Customer Route
 
     Route::controller(CustomerController::class)->group(function () {
-        Route::get('/customerPage', 'customerPage');
+        Route::get('/customerPage', 'customerPage')->name('customer-page');
         Route::get('/customerList', 'customerList');
         Route::post('/customerCreate', 'customerCreate');
         Route::delete('/customerDelete/{id}', 'customerDelete');

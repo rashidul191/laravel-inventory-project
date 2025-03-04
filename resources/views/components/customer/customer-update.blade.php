@@ -38,8 +38,7 @@
         showLoader();
         const res = await axios.get(`/customer-by-id/${id}`);
         hideLoader();
-        if (res.status === 200) {
-            // console.log(res.data.name);
+        if (res.status === 200) {         
             $('#customerNameUpdate').val(res.data.name);
             $('#customerEmailUpdate').val(res.data.email);
             $('#customerMobileUpdate').val(res.data.mobile);
