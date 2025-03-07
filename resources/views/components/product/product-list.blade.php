@@ -68,6 +68,14 @@
             $('#deleteID').val(productId);
             $('#deleteFilePath').val(productImg);
         });
+        $('.edit-btn').on('click', function() {
+            $('#update-modal').modal('show');
+            const productId = $(this).data('id');            
+            const productImg = $(this).data('img');
+            FillUpUpdateForm(productId, productImg)
+            // $('#updateID').val(productId);
+            // $('#filePath').val(productImg);
+        });
 
         new DataTable(tableData);
     }

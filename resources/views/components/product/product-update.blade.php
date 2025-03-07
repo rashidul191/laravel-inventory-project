@@ -51,13 +51,36 @@
 
 
 <script>
+    UpdateFillCategoryDropDown()
     async function UpdateFillCategoryDropDown() {
-
+        const catList = $('#productCategoryUpdate');
+        const res = await axios.get('/list-category');
+        res.data.forEach(item => {
+            const option = `
+            <option value='${item.id}'>${item.name}</option>
+            `;
+            catList.append(option);
+        });
+        // console.log(res);
     }
 
 
     async function FillUpUpdateForm(id, filePath) {
+        $('#updateID').val(id);
+        $('#filePath').val(filePath);
+        showLoader();
+        const res = await axios.get(`/productGetById/${id}`);
+        hideLoader();
+        if (res.status === 200) {
+            // console.log(res.data);
+            $('#productNameUpdate').val(res.data.name);
+            $('#productPriceUpdate').val(res.data.price);
+            $('#productUnitUpdate').val(res.data.unit);
+            $('#oldImg').attr('src', res.data.img_url);
 
+        } else {
+            errorToast('something went wrong!');
+        }
     }
 
 

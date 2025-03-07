@@ -57,4 +57,12 @@ class ProductController extends Controller
         File::delete($file_path);
         return Product::where(['id' => $product_id, 'user_id' => $user_id])->delete();
     }
+
+    // product get by id
+    public function productGetById(Request $request, $id)
+    {
+        $user_id = $request->header('userId');
+        $product_id = $id;
+        return Product::where(['id' => $product_id, 'user_id' => $user_id])->first();
+    }
 }
