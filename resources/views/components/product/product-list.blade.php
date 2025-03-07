@@ -50,18 +50,23 @@
             <td>${index+1}</td>      
             <td><img src="${item.img_url}" alt="product image" /></td>
             <td>${item.name}</td>
-            <td>${item.price}</td>
+            <td>TK ${item.price}</td>
             <td>${item.unit}</td>   
             <td>
-            <button class="btn btn-outline btn-outline-info">Edit</button>
-            <button class="btn btn-outline btn-outline-danger">Delete</button>
+            <button data-id="${item.id}" class="btn btn-outline btn-outline-info edit-btn">Edit</button>
+            <button data-id="${item.id}" class="btn btn-outline btn-outline-danger delete-btn">Delete</button>
             </td>         
             </tr>
             `;
-
             tableList.append(row);
 
         });
+
+        $('.delete-btn').on('click', function() {
+            const productId = $(this).data('id');
+            $('#delete-modal').modal('show');
+            $('#deleteID').val(productId);
+        })
 
 
         new DataTable(tableData);

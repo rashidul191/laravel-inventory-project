@@ -82,5 +82,6 @@ Route::middleware([TokenVerificationMiddleware::class])->group(function () {
     Route::controller(ProductController::class)->group(function () {
         Route::get('/productPage', 'productPage')->name('productPage');
         Route::get('/productList', 'productList')->name('productList');
+        Route::delete('/productDelete/{id}', 'productDelete')->name('productDelete');
     });
 });

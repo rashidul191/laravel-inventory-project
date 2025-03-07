@@ -26,9 +26,7 @@
         const res = await axios.delete(`/customerDelete/${customerId}`);
         hideLoader();
         if (res.status === 200) {
-            successToast('Customer Deleted Successful');
-            const tableData = $('#tableData');
-            const tableList = $('#tableList');
+            successToast('Customer Deleted Successful');            
             tableData.DataTable().destroy();
             tableList.empty();
             await getList();
