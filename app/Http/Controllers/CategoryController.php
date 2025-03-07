@@ -33,8 +33,8 @@ class CategoryController extends Controller
     {
         $user_id = $request->header('userId');
         // dd($user_id);
-        $getCategory = Category::where('user_id', $user_id)->get();
-        // $allCategory = Category::all();
+        // $getCategory = Category::where('user_id', $user_id)->get();        
+        $getCategory = Category::all();
         return $getCategory;
     }
 

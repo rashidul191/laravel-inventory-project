@@ -47,27 +47,27 @@
 
             const row = `
             <tr>     
-            <td>${index+1}</td>      
-            <td><img src="${item.img_url}" alt="product image" /></td>
-            <td>${item.name}</td>
-            <td>TK ${item.price}</td>
-            <td>${item.unit}</td>   
-            <td>
-            <button data-id="${item.id}" class="btn btn-outline btn-outline-info edit-btn">Edit</button>
-            <button data-id="${item.id}" class="btn btn-outline btn-outline-danger delete-btn">Delete</button>
-            </td>         
+             <td>${index+1}</td>      
+             <td><img width="100" height="80" src="${item.img_url}" alt="product image" /></td>
+             <td>${item.name}</td>
+             <td>TK ${item.price}</td>
+             <td>${item.unit}</td>   
+             <td>
+                <button data-id="${item.id}" class="btn btn-outline btn-outline-info edit-btn">Edit</button>
+                <button data-id="${item.id}" data-img="${item.img_url}" class="btn btn-outline btn-outline-danger delete-btn">Delete</button>
+             </td>         
             </tr>
             `;
             tableList.append(row);
-
         });
 
         $('.delete-btn').on('click', function() {
             const productId = $(this).data('id');
+            const productImg = $(this).data('img');
             $('#delete-modal').modal('show');
             $('#deleteID').val(productId);
-        })
-
+            $('#deleteFilePath').val(productImg);
+        });
 
         new DataTable(tableData);
     }

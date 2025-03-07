@@ -4,7 +4,7 @@
             <div class="modal-body text-center">
                 <h3 class=" mt-3 text-warning">Delete !</h3>
                 <p class="mb-3">Once delete, you can't get it back.</p>
-                <input class="d-none" id="deleteID"/>
+                <input class="d-none" id="deleteID" />
                 <!-- <input id="deleteID" /> -->
                 <input class="d-none" id="deleteFilePath" />
 
@@ -22,9 +22,15 @@
 <script>
     async function itemDelete() {
         const id = $('#deleteID').val();
+        const imgUrl = $('#deleteFilePath').val();
+        // console.log(id, imgUrl);
         $('#delete-modal-close').click();
         showLoader();
-        const res = await axios.delete(`/productDelete/${id}`);
+        const res = await axios.post(`/productDelete`, {
+            'id': id,
+            'img_url': imgUrl
+
+        });
         hideLoader();
         // console.log(res);
         if (res.status === 200) {

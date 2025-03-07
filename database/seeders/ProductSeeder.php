@@ -28,7 +28,7 @@ class ProductSeeder extends Seeder
                 'name' => $faker->word,
                 'price' => $faker->randomFloat(2, 1, 100),
                 'unit' => $faker->word,
-                'img_url' => $faker->imageUrl(),
+                'img_url' => 'uploads/1-1741364965-lg-monitor.jpg',
                 'user_id' => $user_id,
                 'category_id' => $category_id,
             ]);
