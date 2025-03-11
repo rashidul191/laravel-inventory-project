@@ -32,8 +32,8 @@ class ProductController extends Controller
         $getImgName = $img->getClientOriginalName();
 
         $newCreateImgName = "{$user_id}-{$t}-{$getImgName}";
-        $img->move(public_path('uploads'), $newCreateImgName);
         $img_url = "uploads/{$newCreateImgName}";
+        $img->move(public_path('uploads'), $newCreateImgName);
 
         $result =  Product::create([
             'name' => $request->input('name'),
@@ -64,5 +64,43 @@ class ProductController extends Controller
         $user_id = $request->header('userId');
         $product_id = $id;
         return Product::where(['id' => $product_id, 'user_id' => $user_id])->first();
+    }
+
+    // Product Update
+    public function productUpdate(Request $request, $id)
+    {
+        $user_id = $request->header('userId');
+        $product_id = $id;
+
+        if ($request->hasFile('img_url')) {
+            // Upload New File
+            $img = $request->file('img_url');
+            $t = time();
+            $getImgName = $img->getClientOriginalName();
+            $newImgName = "{$user_id}-{$t}-{$getImgName}";
+            $img_url = "uploads/{$newImgName}";
+            $img->move(public_path('uploads'), $newImgName);
+
+            // Delete Old Image
+
+            $oldImg = $request->input('old_img_url');
+            File::delete($oldImg);
+
+            // Update Product
+            return Product::where(['id' => $product_id, 'user_id' => $user_id])->update([
+                'name' => $request->input('name'),
+                'price' => $request->input('price'),
+                'unit' => $request->input('unit'),
+                'img_url' => $img_url,
+                'category_id' => $request->input('category_id'),
+            ]);
+        } else {
+            return Product::where(['id' => $product_id, 'user_id' => $user_id])->update([
+                'name' => $request->input('name'),
+                'price' => $request->input('price'),
+                'unit' => $request->input('unit'),
+                'category_id' => $request->input('category_id'),
+            ]);
+        }
     }
 }

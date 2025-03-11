@@ -53,7 +53,7 @@
              <td>TK ${item.price}</td>
              <td>${item.unit}</td>   
              <td>
-                <button data-id="${item.id}" class="btn btn-outline btn-outline-info edit-btn">Edit</button>
+                <button data-id="${item.id}" data-img="${item.img_url}" class="btn btn-outline btn-outline-info edit-btn">Edit</button>
                 <button data-id="${item.id}" data-img="${item.img_url}" class="btn btn-outline btn-outline-danger delete-btn">Delete</button>
              </td>         
             </tr>
@@ -70,8 +70,8 @@
         });
         $('.edit-btn').on('click', function() {
             $('#update-modal').modal('show');
-            const productId = $(this).data('id');            
-            const productImg = $(this).data('img');
+            const productId = $(this).data('id');
+            const productImg = $(this).data('img');          
             FillUpUpdateForm(productId, productImg)
             // $('#updateID').val(productId);
             // $('#filePath').val(productImg);

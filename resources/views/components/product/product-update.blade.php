@@ -31,7 +31,8 @@
                                 <input oninput="oldImg.src=window.URL.createObjectURL(this.files[0])" type="file" class="form-control" id="productImgUpdate">
 
                                 <input type="text" class="d-none" id="updateID">
-                                <input type="text" class="d-none" id="filePath">
+                                <!-- <input type="text" class="d-none" id="filePath"> -->
+                                <input type="text" class="" id="filePath">
 
 
                             </div>
@@ -83,9 +84,31 @@
         }
     }
 
-
-
     async function update() {
+        $("#update-modal-close").click();
+        const id = $('#updateID').val();
+        const oldImgUrl = $('#filePath').val();
+        const newImgUrl = URL.createObjectURL($('#productImgUpdate')[0].files[0]);
+        const name = $('#productNameUpdate').val();
+        const price = $('#productPriceUpdate').val();
+        const unit = $('#productUnitUpdate').val();
+        const category_id = $('#productCategoryUpdate').val();
+
+        if(!category_id){
+            console.log("no category id");
+        }
+        // if (newImgUrl) {
+
+
+
+        // }
+
+
+
+
+
+
+
 
     }
 </script>
