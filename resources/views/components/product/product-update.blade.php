@@ -31,9 +31,7 @@
                                 <input oninput="oldImg.src=window.URL.createObjectURL(this.files[0])" type="file" class="form-control" id="productImgUpdate">
 
                                 <input type="text" class="d-none" id="updateID">
-                                <!-- <input type="text" class="d-none" id="filePath"> -->
-                                <input type="text" class="" id="filePath">
-
+                                <input type="text" class="d-none" id="filePath">
 
                             </div>
                         </div>
@@ -74,6 +72,8 @@
         hideLoader();
         if (res.status === 200) {
             // console.log(res.data);
+
+            $('#productCategoryUpdate').val(res.data.category_id);
             $('#productNameUpdate').val(res.data.name);
             $('#productPriceUpdate').val(res.data.price);
             $('#productUnitUpdate').val(res.data.unit);
@@ -85,30 +85,78 @@
     }
 
     async function update() {
-        $("#update-modal-close").click();
         const id = $('#updateID').val();
         const oldImgUrl = $('#filePath').val();
-        const newImgUrl = URL.createObjectURL($('#productImgUpdate')[0].files[0]);
+        const newImgUrl = $('#productImgUpdate')[0].files[0];
         const name = $('#productNameUpdate').val();
         const price = $('#productPriceUpdate').val();
         const unit = $('#productUnitUpdate').val();
         const category_id = $('#productCategoryUpdate').val();
+        if (!category_id) {
+            errorToast('Category is required!');
+        } else if (!name) {
+            errorToast("Product name is required!");
+        } else if (!price) {
+            errorToast("Product price is required!");
+        } else if (!unit) {
+            errorToast("Product unit is required!");
+        } else {
+            $("#update-modal-close").click();
+            // if (newImgUrl) {
+            // console.log("id :", id, "oldImgUrl :", oldImgUrl, "newImgUrl :", newImgUrl, "name :", name, "price :", price, "unit :", unit, "catId :", category_id);
 
-        if(!category_id){
-            console.log("no category id");
+
+            const formData = new FormData();
+            formData.append('img_url', newImgUrl);
+            formData.append('old_img_url', oldImgUrl);
+            formData.append('name', name);
+            formData.append('price', price);
+            formData.append('unit', unit);
+            formData.append('category_id', category_id);
+
+
+            const config = {
+                headers: {
+
+                    'content-type': 'multipart/form-data'
+                }
+            }
+            showLoader();
+            const res = await axios.post(`/productUpdate/${id}`, formData, config);
+            hideLoader();
+            // console.log(res);
+            if (res.status === 200) {
+                successToast("Product Update Successfully");
+                $("#update-form")[0].reset();
+                tableData.DataTable().destroy();
+                tableList.empty();
+                await getList();
+            } else {
+                errorToast("Something went wrong!");
+            }
+
+            // } else {
+            // console.log("id :", id, "oldImgUrl :", oldImgUrl, "name :", name, "price :", price, "unit :", unit, "catId :", category_id);
+            // showLoader();
+            // const res = await axios.post(`/productUpdate/${id}`, {
+            //     'name': name,
+            //     'price': price,
+            //     'unit': unit,
+            //     'category_id': category_id,
+            // });
+            // hideLoader();
+            // console.log(res);
+            // if (res.status === 200) {
+            //     successToast("Product Update Successfully");
+            //     $("#update-form")[0].reset();
+            //     tableData.DataTable().destroy();
+            //     tableList.empty();
+            //     await getList();
+            // } else {
+            //     errorToast("Something went wrong!");
+            // }
         }
-        // if (newImgUrl) {
-
-
-
         // }
-
-
-
-
-
-
-
 
     }
 </script>
