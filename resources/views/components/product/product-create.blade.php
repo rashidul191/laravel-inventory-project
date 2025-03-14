@@ -62,32 +62,61 @@
     }
 
     async function Save() {
-        // $('#modal-close').click();
 
         const categoryId = $('#productCategory').val();
         const productName = $('#productName').val();
         const productPrice = $('#productPrice').val();
         const productUnit = $('#productUnit').val();
         // const productImg = $('#productImg').val();
-        const productImg = $('#productImg').files[0];
+        const productImg = $('#productImg')[0].files[0];
 
-        // if (!categoryId) {
-        //     errorToast("Category is required!");
-        // } else if (!productName) {
-        //     errorToast("Product name is required!");
-        // } else if (!productPrice) {
-        //     errorToast("Product price is required!");
+        if (!categoryId) {
+            errorToast("Category is required!");
+        } else if (!productName) {
+            errorToast("Product name is required!");
+        } else if (!productPrice) {
+            errorToast("Product price is required!");
 
-        // } else if (!productUnit) {
-        //     errorToast("Product unit is required!");
+        } else if (!productUnit) {
+            errorToast("Product unit is required!");
 
-        // } else if (!productImg) {
-        //     errorToast("Product img is required!");
+        } else if (!productImg) {
+            errorToast("Product img is required!");
 
-        // } else {
-        //     console.log("catID :", categoryId, "name :", productName, "price: ", productPrice, "unit :", productUnit, "img :", productImg);
-        // }
-        console.log("catID :", categoryId, "name :", productName, "price: ", productPrice, "unit :", productUnit, "img :", productImg);
+        } else {
+            // console.log("catID :", categoryId, "name :", productName, "price: ", productPrice, "unit :", productUnit, "img :", productImg);
+            $('#modal-close').click();
+            const formData = new FormData();
+            formData.append('img_url', productImg);
+            formData.append('name', productName);
+            formData.append('price', productPrice);
+            formData.append('unit', productUnit);
+            formData.append('category_id', categoryId);
+
+
+            const config = {
+                headers: {
+
+                    'content-type': 'multipart/form-data'
+                }
+            }
+
+            showLoader();
+            const res = await axios.post('/productCreate', formData, config);
+            hideLoader();
+            console.log(res);
+
+            if (res.status === 201) {
+                successToast("Product Create Successfully");
+                $("#save-form")[0].reset();                
+                tableData.DataTable().destroy();
+                tableList.empty();
+                await getList();
+            } else {
+                errorToast("something went wrong!");
+            }
+        }
+        // console.log("catID :", categoryId, "name :", productName, "price: ", productPrice, "unit :", productUnit, "img :", productImg);
 
 
 

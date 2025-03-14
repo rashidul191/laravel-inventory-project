@@ -68,11 +68,11 @@
             $('#deleteID').val(productId);
             $('#deleteFilePath').val(productImg);
         });
-        $('.edit-btn').on('click', function() {
+        $('.edit-btn').on('click', async function() {
             $('#update-modal').modal('show');
             const productId = $(this).data('id');
             const productImg = $(this).data('img');          
-            FillUpUpdateForm(productId, productImg)
+           await FillUpUpdateForm(productId, productImg)
             // $('#updateID').val(productId);
             // $('#filePath').val(productImg);
         });
