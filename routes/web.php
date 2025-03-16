@@ -92,5 +92,10 @@ Route::middleware([TokenVerificationMiddleware::class])->group(function () {
     // Invoice Route
     Route::controller(InvoiceController::class)->group(function () {
         Route::get('/invoicePage', 'invoicePage')->name('invoicePage');
+        Route::get('/salePage', 'salePage')->name('salePage');
+        Route::post('/invoiceCreate', 'invoiceCreate')->name('invoiceCreate');
+        Route::post('/invoiceSelect', 'invoiceSelect')->name('invoiceSelect');
+        Route::post('/invoiceDetails', 'invoiceDetails')->name('invoiceDetails');
+        Route::post('/invoiceDelete', 'invoiceDelete')->name('invoiceDelete');
     });
 });
